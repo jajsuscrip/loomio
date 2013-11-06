@@ -5,6 +5,7 @@ class UsersController < BaseController
       flash[:error] = t("error.cant_view_member_profile")
       redirect_to root_url
     end
+    @groups = @user.groups.where(viewable_by: 'everyone', parent_id: nil)
   end
 
   def update
