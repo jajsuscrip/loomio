@@ -65,6 +65,9 @@ class Group < ActiveRecord::Base
                                     created_earlier_than(1.month.ago).
                                     parents_only
 
+  scope :for_user_profile, -> { parents_only.visible_to_the_public }
+
+
   has_one :group_request
 
   has_many :memberships,

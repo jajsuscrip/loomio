@@ -96,7 +96,6 @@ class User < ActiveRecord::Base
   scope :sorted_by_name, order("lower(name)")
   scope :admins, where(is_admin: true)
   scope :coordinators, joins(:memberships).where('memberships.access_level = ?', 'admin').group('users.id')
-
   #scope :unviewed_notifications, notifications.where('viewed_at IS NULL')
 
   def self.email_taken?(email)
@@ -299,6 +298,10 @@ class User < ActiveRecord::Base
 
   def belongs_to_manual_subscription_group?
     groups.where(payment_plan: ['manual_subscription']).exists?
+  end
+
+  def groups_for_profile_page
+    groups.for_user_profile
   end
 
   private
